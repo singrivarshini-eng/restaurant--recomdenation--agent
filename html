@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Recommendation AI Agent</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 450px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .restaurant {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🍽️ Restaurant Recommendation Agent</h1>
+
+    <input type="text" id="location" placeholder="Enter Location">
+
+    <select id="cuisine">
+        <option value="">Select Cuisine</option>
+        <option>Indian</option>
+        <option>Chinese</option>
+        <option>Italian</option>
+        <option>South Indian</option>
+    </select>
+
+    <input type="number" id="budget" placeholder="Enter Budget (₹)">
+
+    <button onclick="recommendRestaurant()">
+        Get Recommendations
+    </button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    const restaurants = [
+        {
+            name: "Spice Garden",
+            cuisine: "Indian",
+            budget: 500,
+            rating: 4.6
+        },
+        {
+            name: "Dragon Palace",
+            cuisine: "Chinese",
+            budget: 600,
+            rating: 4.4
+        },
+        {
+            name: "Pasta House",
+            cuisine: "Italian",
+            budget: 700,
+            rating: 4.5
+        },
+        {
+            name: "Udupi Delight",
+            cuisine: "South Indian",
+            budget: 300,
+            rating: 4.7
+        }
+    ];
+
+    function recommendRestaurant() {
+        const cuisine = document.getElementById("cuisine").value;
+        const budget = document.getElementById("budget").value;
+        const result = document.getElementById("result");
+
+        result.innerHTML = "";
+
+        const filtered = restaurants.filter(r =>
+            (cuisine === "" || r.cuisine === cuisine) &&
+            (budget === "" || r.budget <= budget)
+        );
+
+        if (filtered.length === 0) {
+            result.innerHTML = "<p>No restaurants found.</p>";
+        } else {
+            filtered.forEach(r => {
+                result.innerHTML += `
+                    <div class="restaurant">
+                        <h3>${r.name}</h3>
+                        <p>Cuisine: ${r.cuisine}</p>
+                        <p>Budget: ₹${r.budget}</p>
+                        <p>Rating: ⭐ ${r.rating}</p>
+                    </div>
+                `;
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
